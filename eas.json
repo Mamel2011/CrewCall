@@ -5,6 +5,12 @@
       "distribution": "internal"
     },
     "preview": {
+      "ios": {
+        "simulator": true
+      },
+      "android": {
+        "buildType": "apk"
+      },
       "distribution": "internal"
     },
     "production": {}

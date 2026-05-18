@@ -23,7 +23,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = SkyAnuncios/Info.plist; sourceTree = "<group>"; };
 		44E931CBC51339A4E19F74A7 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-SkyAnuncios/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		543F383AA3EB54001B5E3580 /* libPods-SkyAnuncios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SkyAnuncios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5929E7861E71FEA663F91508 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = SkyAnuncios/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		5929E7861E71FEA663F91508 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = SkyAnuncios/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = SkyAnuncios/SplashScreen.storyboard; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
 		E48133B5F621E6F7DB4747B4 /* Pods-SkyAnuncios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SkyAnuncios.debug.xcconfig"; path = "Target Support Files/Pods-SkyAnuncios/Pods-SkyAnuncios.debug.xcconfig"; sourceTree = "<group>"; };
@@ -119,7 +119,6 @@
 				E48133B5F621E6F7DB4747B4 /* Pods-SkyAnuncios.debug.xcconfig */,
 				106060D2D8CCBAB32FAC8131 /* Pods-SkyAnuncios.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -356,6 +355,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = SkyAnuncios/SkyAnuncios.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2NEDV76X59;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -392,6 +392,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = SkyAnuncios/SkyAnuncios.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2NEDV76X59;
 				INFOPLIST_FILE = SkyAnuncios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (

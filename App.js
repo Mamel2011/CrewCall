@@ -3,7 +3,7 @@ import * as Speech from 'expo-speech';
 import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View, Alert } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View, Alert, Platform } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
 const Stack = createStackNavigator();
@@ -14,7 +14,6 @@ function HomeScreen({ navigation }) {
   const [gate, setGate] = useState('');
   const horario = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
   
-
   const handleNext = () => {
     if (!flightNumber.trim() || !destination.trim() || !gate.trim()) {
       Alert.alert('Faltan datos', 'Por favor ingrese número de vuelo, destino y puerta.');
@@ -25,8 +24,10 @@ function HomeScreen({ navigation }) {
   
   return (
     <SafeAreaView style={styles.container}>
+    {/* ***** Actualizar la versión cada vez que se haga un cambio en el código ****** */}
+    <Text style={styles.versionText}>SkyAnuncios V1.4</Text> 
       <View style={styles.card}>
-        <Text style={styles.title}>SkyAnuncios</Text>
+        <Text style={styles.title}>Ingreso de datos</Text>
 
         <Text style={styles.label}>Número de vuelo</Text>
         <TextInput
@@ -53,6 +54,8 @@ function HomeScreen({ navigation }) {
             <Picker.Item label="COPIAPÓ" value="COPIAPÓ" />
             <Picker.Item label="LA SERENA" value="LA SERENA" />
             <Picker.Item label="SANTIAGO" value="SANTIAGO" />
+            <Picker.Item label="SANTIAGO VIA PUERTO MONTT" value="SANTIAGO VIA PUERTO MONT" />
+            <Picker.Item label="SANTIAGO VIA LA SERENA" value="SANTIAGO VIA LA SERENA" />
             <Picker.Item label="CONCEPCIÓN" value="CONCEPCIÓN" />
             <Picker.Item label="TEMUCO" value="TEMUCO" />
             <Picker.Item label="VALDIVIA" value="VALDIVIA" />
@@ -64,7 +67,7 @@ function HomeScreen({ navigation }) {
             <Picker.Item label="PUNTA ARENAS" value="PUNTA ARENAS" />
             <Picker.Item label="AEROPARQUE" value="AEROPARQUE" />
             <Picker.Item label="EZEIZA" value="EZEIZA" />
-            <Picker.Item label="BARILOCHE" value="BARILOCHE" />
+            <Picker.Item label="BARILOCHE" value="bariloche" />
             <Picker.Item label="MENDOZA" value="MENDOZA" />
             <Picker.Item label="EL CALAFATE" value="EL CALAFATE" />
             <Picker.Item label="SALVADOR DE BAHIA" value="SALVADOR DE BAHIA" />
@@ -72,10 +75,12 @@ function HomeScreen({ navigation }) {
             <Picker.Item label="RIO DE JANEIRO" value="RIO DE JANEIRO" />
             <Picker.Item label="MONTEVIDEO" value="MONTEVIDEO" />
             <Picker.Item label="SAO PAULO" value="SAO PAULO" />
-            <Picker.Item label="FLORIANOPOLIS" value="FLORIANOPOLIS" />
+            <Picker.Item label="FLORIANOPOLIS" value="florianopolis" />
             <Picker.Item label="LIMA VIA AEROPARQUE" value="LIMA VIA AEROPARQUE" />
+            <Picker.Item label="LIMA VIA MONTEVIDEO" value="LIMA VIA MONTEVIDEO" />
             <Picker.Item label="LIMA VIA EZEIZA" value="LIMA VIA EZEIZA" />
             <Picker.Item label="SALVADOR DE BAHIA VIA EZEIZA" value="SALVADOR DE BAHIA VIA EZEIZA" />
+            <Picker.Item label="SALVADOR DE BAHIA VIA MONTEVIDEO" value="SALVADOR DE BAHIA VIA MONTEVIDEO" />
             <Picker.Item label="RIO DE JANEIRO VIA MONTEVIDEO" value="RIO DE JANEIRO VIA MONTEVIDEO" />
             <Picker.Item label="BALMACEDA VIA PUERTO MONTT" value="BALMACEDA VIA PUERTO MONT" />
             <Picker.Item label="PUERTO NATALES VIA PUERTO MONTT" value="PUERTO NATALES VIA PUERTO MONT" />
@@ -103,6 +108,39 @@ function HomeScreen({ navigation }) {
         <Text style={styles.footerText}>Gerencia de Aeropuertos</Text>
         <Text style={styles.footerText}>B. Montecinos - C.Campos</Text>
       </View>
+      <StatusBar style="auto" />
+    </SafeAreaView>
+  );
+}
+
+function EntryScreen({ navigation }) {
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.card}>
+        <Text style={styles.title}>SkyAnuncios</Text>
+        <Text style={styles.subTitle}>Seleccione una opción</Text>
+
+        <TouchableOpacity style={styles.menuButton} onPress={() => navigation.navigate('Home')}>
+          <Text style={styles.menuButtonText}>Regular</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.menuButton} onPress={() => navigation.navigate('Charters')}>
+          <Text style={styles.menuButtonText}>Charter</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.menuButton} onPress={() => navigation.navigate('Contingencia')}>
+          <Text style={styles.menuButtonText}>Contingencia</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.menuButton} onPress={() => navigation.navigate('Arribo')}>
+          <Text style={styles.menuButtonText}>Arribo</Text>
+        </TouchableOpacity>
+      </View>
+      <StatusBar style="auto" />
+    </SafeAreaView>
+  );
+}
+
+function PlaceholderScreen() {
+  return (
+    <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
     </SafeAreaView>
   );
@@ -187,22 +225,92 @@ function getFrase(lang, id, vuelo, destino, puerta, horario) {
   return anuncio(vuelo, destino, puerta);
 }
 
-function speak(lang, id, vuelo, destino, puerta, horario) {
-  const text = getFrase(lang, id, vuelo, destino, puerta, horario);
-  if (!text) return;
-
-  let voiceConfig = { pitch: 1.0, rate: 1.0 };
-  
-  if (lang === 'es') voiceConfig.language = 'es-MX';
-  if (lang === 'en') voiceConfig.language = 'en-RU';
-  if (lang === 'pt') voiceConfig.language = 'pt-BR';
-
-  Speech.stop();
-  Speech.speak(text, voiceConfig);
-}
-
 function AnnouncementScreenBase({ title, ids, route, navigation, nextRoute, buttonText = "Siguiente" }) {
   const { flightNumber, destination, gate, horario } = route.params;
+  const [speakingState, setSpeakingState] = useState({ lang: null, id: null, paused: false, active: false, text: '', charIndex: 0 });
+
+  const getLanguageLabel = (lang) => {
+    if (lang === 'es') return 'ES';
+    if (lang === 'en') return 'EN';
+    return 'PT';
+  };
+
+  const supportsPauseResume = Platform.OS !== 'android' && typeof Speech.pause === 'function' && typeof Speech.resume === 'function';
+
+  const speakSegment = (lang, id, text, startIndex) => {
+    const voiceConfig = { pitch: 1.0, rate: 1.0 };
+    if (lang === 'es') voiceConfig.language = 'es-MX';
+    if (lang === 'en') voiceConfig.language = 'en-RU';
+    if (lang === 'pt') voiceConfig.language = 'pt-BR';
+
+    const segment = text.slice(startIndex);
+    Speech.speak(segment, {
+      ...voiceConfig,
+      onBoundary: ({ charIndex }) => {
+        setSpeakingState((prevState) => {
+          if (prevState.lang !== lang || prevState.id !== id) return prevState;
+          return { ...prevState, charIndex: startIndex + charIndex };
+        });
+      },
+      onDone: () => setSpeakingState({ lang: null, id: null, paused: false, active: false, text: '', charIndex: 0 }),
+      onError: () => setSpeakingState({ lang: null, id: null, paused: false, active: false, text: '', charIndex: 0 }),
+    });
+  };
+
+  const handleToggleSpeak = async (lang, id) => {
+    const isActive = speakingState.active && speakingState.lang === lang && speakingState.id === id;
+    const text = getFrase(lang, id, flightNumber, destination, gate, horario);
+    if (!text) return;
+
+    if (isActive) {
+      if (speakingState.paused) {
+        if (supportsPauseResume) {
+          await Speech.resume();
+          setSpeakingState((prevState) => ({ ...prevState, paused: false }));
+        } else {
+          speakSegment(lang, id, speakingState.text, speakingState.charIndex || 0);
+          setSpeakingState((prevState) => ({ ...prevState, paused: false, active: true }));
+        }
+      } else {
+        if (supportsPauseResume) {
+          await Speech.pause();
+          setSpeakingState((prevState) => ({ ...prevState, paused: true }));
+        } else {
+          Speech.stop();
+          setSpeakingState((prevState) => ({ ...prevState, paused: true }));
+        }
+      }
+      return;
+    }
+
+    Speech.stop();
+    setSpeakingState({ lang, id, paused: false, active: true, text, charIndex: 0 });
+    if (supportsPauseResume) {
+      const voiceConfig = { pitch: 1.0, rate: 1.0 };
+      if (lang === 'es') voiceConfig.language = 'es-MX';
+      if (lang === 'en') voiceConfig.language = 'en-RU';
+      if (lang === 'pt') voiceConfig.language = 'pt-BR';
+
+      Speech.speak(text, {
+        ...voiceConfig,
+        onBoundary: ({ charIndex }) => {
+          setSpeakingState((prevState) => {
+            if (prevState.lang !== lang || prevState.id !== id) return prevState;
+            return { ...prevState, charIndex };
+          });
+        },
+        onDone: () => setSpeakingState({ lang: null, id: null, paused: false, active: false, text: '', charIndex: 0 }),
+        onError: () => setSpeakingState({ lang: null, id: null, paused: false, active: false, text: '', charIndex: 0 }),
+      });
+    } else {
+      speakSegment(lang, id, text, 0);
+    }
+  };
+
+  const handleStop = () => {
+    Speech.stop();
+    setSpeakingState({ lang: null, id: null, paused: false, active: false, text: '', charIndex: 0 });
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -214,14 +322,25 @@ function AnnouncementScreenBase({ title, ids, route, navigation, nextRoute, butt
           <View key={id} style={styles.announcementBlock}>
             <Text style={styles.announcementTitle}>Anuncio {id}: {announcementTitles[id]}</Text>
             <View style={styles.buttonRow}>
-              <TouchableOpacity style={[styles.button, styles.buttonEs]} onPress={() => speak('es', id, flightNumber, destination, gate, horario)}>
-                <Text style={styles.buttonText}>ES</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={[styles.button, styles.buttonEn]} onPress={() => speak('en', id, flightNumber, destination, gate, horario)}>
-                <Text style={styles.buttonText}>EN</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={[styles.button, styles.buttonPt]} onPress={() => speak('pt', id, flightNumber, destination, gate, horario)}>
-                <Text style={styles.buttonText}>PT</Text>
+              {['es', 'en', 'pt'].map((lang) => {
+                const active = speakingState.active && speakingState.lang === lang && speakingState.id === id;
+                const label = getLanguageLabel(lang);
+                const displayLabel = active ? `${label} ${speakingState.paused ? '(▶)' : '(||)'}` : label;
+                const langStyle = lang === 'es' ? styles.buttonEs : lang === 'en' ? styles.buttonEn : styles.buttonPt;
+                return (
+                  <TouchableOpacity
+                    key={lang}
+                    style={[styles.button, langStyle, active ? styles.buttonActive : null]}
+                    onPress={() => handleToggleSpeak(lang, id)}
+                  >
+                    <Text style={styles.buttonText}>{displayLabel}</Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+            <View style={styles.stopRow}>
+              <TouchableOpacity style={[styles.button, styles.buttonStop]} onPress={handleStop}>
+                <Text style={styles.buttonText}>STOP</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -253,8 +372,12 @@ function FinalEmbarqueScreen(props) {
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName="Entry">
+        <Stack.Screen name="Entry" component={EntryScreen} options={{ title: 'Inicio' }} />
         <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'SkyAnuncios' }} />
+        <Stack.Screen name="Charters" component={PlaceholderScreen} options={{ title: 'Charters' }} />
+        <Stack.Screen name="Contingencia" component={PlaceholderScreen} options={{ title: 'Contingencia' }} />
+        <Stack.Screen name="Arribo" component={PlaceholderScreen} options={{ title: 'Arribo' }} />
         <Stack.Screen name="PreEmbarque" component={PreEmbarqueScreen} options={{ title: 'Pre embarque' }} />
         <Stack.Screen name="LlamadosEmbarque" component={LlamadosEmbarqueScreen} options={{ title: 'Llamados embarque' }} />
         <Stack.Screen name="FinalEmbarque" component={FinalEmbarqueScreen} options={{ title: 'Final embarque' }} />
@@ -309,14 +432,17 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     backgroundColor: '#fafbff',
     marginTop: 6,
-    /* marginBottom: 15,
+    /*//Solo aplicable a ios
+    marginBottom: 15,
     height: 150,
-    justifyContent: 'center',
-    width: '100%',*/
+    justifyContent: 'top',
+    width: '100%',
+    //***********/
   },
   picker: {
     height: 50,
     width: '100%',
+    justifyContent: 'center',
   },
   nextButton: {
     marginTop: 20,
@@ -328,6 +454,18 @@ const styles = StyleSheet.create({
   nextButtonSecondary: {
     marginTop: 16,
     backgroundColor: '#2f5d99',
+  },
+  menuButton: {
+    marginTop: 12,
+    backgroundColor: '#1a3d7c',
+    borderRadius: 8,
+    paddingVertical: 14,
+    alignItems: 'center',
+  },
+  menuButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
   },
   nextButtonText: {
     color: '#fff',
@@ -368,6 +506,19 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
+  buttonActive: {
+    borderWidth: 2,
+    borderColor: '#000',
+  },
+  buttonStop: {
+    backgroundColor: '#777',
+    marginHorizontal: 0,
+  },
+  stopRow: {
+    marginTop: 8,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
   announcementBlock: {
     marginVertical: 8,
     padding: 10,
@@ -395,5 +546,10 @@ const styles = StyleSheet.create({
   footerText: {
     color: '#fff',
     fontSize: 14,
+  },
+  versionText: {
+    color: '#fff',
+    fontSize: 14,
+    alignItems: 'flex-end',
   },
 });

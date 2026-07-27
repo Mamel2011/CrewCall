@@ -1,0 +1,161 @@
+import { StyleSheet } from 'react-native';
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#671e75',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  card: {
+    width: '90%',
+    backgroundColor: '#ffffff',
+    borderRadius: 14,
+    padding: 20,
+    elevation: 6,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 16,
+    color: '#671e75',
+    textAlign: 'center',
+  },
+  label: {
+    marginTop: 12,
+    marginBottom: 6,
+    fontSize: 16,
+    color: '#333',
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#c4cddf',
+    borderRadius: 8,
+    padding: 12,
+    fontSize: 16,
+    backgroundColor: '#fafbff',
+  },
+  pickerContainer: {
+    borderWidth: 1,
+    borderColor: '#c4cddf',
+    borderRadius: 8,
+    overflow: 'hidden',
+    backgroundColor: '#fafbff',
+    marginTop: 6,
+  },
+  picker: {
+    height: 50,
+    width: '100%',
+    justifyContent: 'center',
+  },
+  nextButton: {
+    marginTop: 20,
+    backgroundColor: '#1a3d7c',
+    borderRadius: 8,
+    paddingVertical: 12,
+    alignItems: 'center',
+  },
+  nextButtonSecondary: {
+    marginTop: 16,
+    backgroundColor: '#2f5d99',
+  },
+  menuButton: {
+    marginTop: 12,
+    backgroundColor: '#1a3d7c',
+    borderRadius: 8,
+    paddingVertical: 14,
+    alignItems: 'center',
+  },
+  menuButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  nextButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  subTitle: {
+    marginTop: 18,
+    fontSize: 17,
+    fontWeight: '600',
+    color: '#1a3d7c',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  buttonRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  button: {
+    flex: 1,
+    marginHorizontal: 4,
+    borderRadius: 8,
+    paddingVertical: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonEs: {
+    backgroundColor: '#d63f49',
+  },
+  buttonEn: {
+    backgroundColor: '#3f78d6',
+  },
+  buttonPt: {
+    backgroundColor: '#3fbf6d',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  buttonActive: {
+    borderWidth: 2,
+    borderColor: '#000',
+  },
+  buttonStop: {
+    backgroundColor: '#777',
+    marginHorizontal: 0,
+  },
+  stopRow: {
+    marginTop: 8,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  announcementBlock: {
+    marginVertical: 8,
+    padding: 10,
+    backgroundColor: '#f5e8ff',
+    borderRadius: 10,
+  },
+  announcementTitle: {
+    fontSize: 15,
+    fontWeight: '700',
+    marginBottom: 8,
+    color: '#5d2f89',
+  },
+  footer: {
+    position: 'absolute',
+    right: 0,
+    bottom: 0,
+    width: '100%',
+    paddingRight: 20,
+    paddingBottom: 10,
+    backgroundColor: 'rgba(103, 30, 117, 0.85)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  footerText: {
+    color: '#fff',
+    fontSize: 14,
+  },
+  versionText: {
+    color: '#fff',
+    fontSize: 14,
+    alignItems: 'flex-end',
+  },
+});

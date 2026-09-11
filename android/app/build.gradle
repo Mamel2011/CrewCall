@@ -87,9 +87,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.cristian.mcampos.SkyAnuncios'
+    namespace 'com.cristian.mcampos.crewcall'
     defaultConfig {
-        applicationId 'com.cristian.mcampos.SkyAnuncios'
+        applicationId 'com.cristian.mcampos.crewcall'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

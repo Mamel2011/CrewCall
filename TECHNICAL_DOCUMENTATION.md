@@ -1,8 +1,8 @@
-# SkyAnuncios - Documentación Técnica
+# CrewCall - Documentación Técnica
 
 ## Resumen del proyecto
 
-SkyAnuncios es una aplicación móvil Expo diseñada para generar y reproducir anuncios de embarque en tres idiomas (español, inglés y portugués). El proyecto usa React Native con navegación de pila y control de audio a través de `expo-speech`.
+CrewCall es una aplicación móvil Expo diseñada para generar y reproducir anuncios de embarque en tres idiomas (español, inglés y portugués). El proyecto usa React Native con navegación de pila y control de audio a través de `expo-speech`.
 
 ## Tecnología principal
 

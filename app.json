@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "SkyAnuncios",
-    "slug": "SkyAnuncios",
+    "name": "CrewCall",
+    "slug": "crewcall",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -13,7 +13,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.cristian.mcampos.SkyAnuncios"
+      "bundleIdentifier": "com.cristian.mcampos.crewcall"
     },
     "android": {
       "adaptiveIcon": {
@@ -22,15 +22,16 @@
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
-      "package": "com.cristian.mcampos.SkyAnuncios"
+      "package": "com.cristian.mcampos.crewcall"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "4158ef9b-ea87-43df-b7e5-c7e2897c4c76"
+        "projectId": "d130700a-49e3-4779-8acf-9f970c16f8cb"
       }
-    }
+    },
+    "owner": "cristian.mcampos"
   }
 }

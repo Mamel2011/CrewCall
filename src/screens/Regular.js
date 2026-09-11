@@ -54,72 +54,6 @@ const destinations = [
   { label: "ANTOFAGASTA VIA LA SERENA", value: "ANTOFAGASTA VIA LA SERENA" },
 ];
 
-function HomeScreen({ navigation }) {
-  const [flightNumber, setFlightNumber] = useState('');
-  const [destination, setDestination] = useState('');
-  const [gate, setGate] = useState('');
-  const horario = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
-  
-  const handleNext = () => {
-    if (!flightNumber.trim() || !destination.trim() || !gate.trim()) {
-      Alert.alert('Faltan datos', 'Por favor ingrese número de vuelo, destino y puerta.');
-      return;
-    }
-    navigation.navigate('PreEmbarque', { 
-      flightNumber: flightNumber.trim(), 
-      destination: destination.trim(), 
-      gate: gate.trim(), 
-      horario: horario 
-    });
-  };
-  
-  return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.card}>
-        <Text style={styles.title}>Ingreso de datos</Text>
-
-        <Text style={styles.label}>Número de vuelo</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Ingrese número de vuelo"
-          onChangeText={setFlightNumber}
-          value={flightNumber}
-          autoCapitalize="characters"
-          keyboardType="numeric" 
-        />
-
-        <Text style={styles.label}>Destino</Text>
-        <View style={styles.pickerContainer}>
-          <Picker
-            selectedValue={destination}
-            onValueChange={(itemValue) => setDestination(itemValue)}
-            style={styles.picker}
-          >
-            {destinations.map((item, index) => (
-              <Picker.Item key={index} label={item.label} value={item.value} />
-            ))}
-          </Picker>
-        </View>
-
-        <Text style={styles.label}>Número de Puerta</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Ingrese número de puerta"
-          onChangeText={setGate}
-          value={gate}
-          autoCapitalize="characters"
-          keyboardType="default" 
-        />
-
-        <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
-          <Text style={styles.nextButtonText}>Siguiente</Text>
-        </TouchableOpacity>
-      </View>
-      <StatusBar style="auto" />
-    </SafeAreaView>
-  );
-}
-
 function AnnouncementScreenBase({ title, ids, route, navigation, nextRoute, buttonText = "Siguiente" }) {
   const { flightNumber = '', destination = '', gate = '', horario = '' } = route?.params || {};
   const [speakingState, setSpeakingState] = useState({ lang: null, id: null, paused: false, active: false, text: '', charIndex: 0 });
@@ -185,7 +119,7 @@ function AnnouncementScreenBase({ title, ids, route, navigation, nextRoute, butt
     Speech.stop();
     setSpeakingState({ lang, id, paused: false, active: true, text, charIndex: 0 });
     if (supportsPauseResume) {
-      const voiceConfig = { pitch: 1.0, rate: 1.0 };
+      const voiceConfig = { pitch: 1.0, rate: 0.7 };
        /*. ***** IOS ****
     if (lang === 'es') voiceConfig.language = 'es-MX';
     if (lang === 'en') voiceConfig.language = 'en-RU';
@@ -220,17 +154,15 @@ function AnnouncementScreenBase({ title, ids, route, navigation, nextRoute, butt
     <SafeAreaView style={styles.container}>
       <View style={styles.card}>
         <Text style={styles.title}>{title}</Text>
-        <Text style={styles.subTitle}>Vuelo: {flightNumber} - Destino: {destination} - Puerta: {gate}</Text>
-
         {ids.map((id) => (
           <View key={id} style={styles.announcementBlock}>
             <Text style={styles.announcementTitle}>Anuncio {id}: {announcementTitles[id]}</Text>
             <View style={styles.buttonRow}>
-              {['es', 'en', 'pt'].map((lang) => {
+              {['es', 'en'].map((lang) => {
                 const active = speakingState.active && speakingState.lang === lang && speakingState.id === id;
                 const label = getLanguageLabel(lang);
                 const displayLabel = active ? `${label} ${speakingState.paused ? '(▶)' : '(||)'}` : label;
-                const langStyle = lang === 'es' ? styles.buttonEs : lang === 'en' ? styles.buttonEn : styles.buttonPt;
+                const langStyle = lang === 'es' ? styles.buttonEs : styles.buttonEn;
                 return (
                   <TouchableOpacity
                     key={lang}
@@ -241,7 +173,17 @@ function AnnouncementScreenBase({ title, ids, route, navigation, nextRoute, butt
                   </TouchableOpacity>
                 );
               })}
-            </View> 
+              {/*
+                Opción PT comentada intencionalmente — mantener para referencia.
+                <TouchableOpacity
+                  key={'pt'}
+                  style={[styles.button, styles.buttonPt]}
+                  onPress={() => handleToggleSpeak('pt', id)}
+                >
+                  <Text style={styles.buttonText}>{getLanguageLabel('pt')}</Text>
+                </TouchableOpacity>
+              */}
+            </View>
             {/*
             <View style={styles.stopRow}>
               <TouchableOpacity style={[styles.button, styles.buttonStop]} onPress={handleStop}>
@@ -266,15 +208,15 @@ function AnnouncementScreenBase({ title, ids, route, navigation, nextRoute, butt
 }
 
 function PreEmbarqueScreen(props) {
-  return <AnnouncementScreenBase {...props} title="Pre embarque" ids={[1,2]} nextRoute="LlamadosEmbarque" />;
+  return <AnnouncementScreenBase {...props} title="Demo Seguridad" ids={[1,2]} nextRoute="Demo Seguridad 2" />;
 }
 
 function LlamadosEmbarqueScreen(props) {
-  return <AnnouncementScreenBase {...props} title="Llamados embarque" ids={[3,4,5,6]} nextRoute="FinalEmbarque" />;
+  return <AnnouncementScreenBase {...props} title="Demo Seguridad 2" ids={[3,4,5,6]} nextRoute="Demo Seguridad 3" />;
 }
 
 function FinalEmbarqueScreen(props) {
-  return <AnnouncementScreenBase {...props} title="Final embarque" ids={[7,8]} nextRoute="RegularHome" buttonText="Finalizar" />;
+  return <AnnouncementScreenBase {...props} title="Demo Seguridad 3" ids={[7,8,9,10]} nextRoute="Demo Seguridad" buttonText="Finalizar" />;
 }
 
 function HeaderNavButton({ label, onPress }) {
@@ -293,7 +235,7 @@ function EntryHeaderButton() {
     if (parentNavigation && typeof parentNavigation.navigate === 'function') {
       parentNavigation.navigate('Entry');
     } else if (navigation && typeof navigation.navigate === 'function') {
-      navigation.navigate('RegularHome');
+      navigation.navigate('DemoSeguridadHome');
     }
   };
 
@@ -304,57 +246,58 @@ function PreEmbarqueHeaderButton() {
   const navigation = useNavigation();
   const route = useRoute();
   const params = route?.params || {};
-  return <HeaderNavButton label="Home" onPress={() => navigation.navigate('RegularHome', params)} />;
+  const handlePress = () => {
+    const parentNavigation = navigation?.getParent?.();
+    if (parentNavigation && typeof parentNavigation.navigate === 'function') {
+      parentNavigation.navigate('Entry', params);
+    } else if (navigation && typeof navigation.navigate === 'function') {
+      navigation.navigate('Entry', params);
+    }
+  };
+
+  return <HeaderNavButton label="Home" onPress={handlePress} />;
 }
 
 function LlamadosEmbarqueHeaderButton() {
   const navigation = useNavigation();
   const route = useRoute();
   const params = route?.params || {};
-  return <HeaderNavButton label="PreEmbarque" onPress={() => navigation.navigate('PreEmbarque', params)} />;
+  return <HeaderNavButton label="Demo Seguridad" onPress={() => navigation.navigate('Demo Seguridad', params)} />;
 }
 
 function FinalEmbarqueHeaderButton() {
   const navigation = useNavigation();
   const route = useRoute();
   const params = route?.params || {};
-  return <HeaderNavButton label="LlamadosEmbarque" onPress={() => navigation.navigate('LlamadosEmbarque', params)} />;
+  return <HeaderNavButton label="Demo Seguridad 2" onPress={() => navigation.navigate('Demo Seguridad 2', params)} />;
 }
 
-export function RegularNavigation() {
+export function DemoSeguridadNavigation() {
   const Stack = require('@react-navigation/stack').createStackNavigator();
   
   return (
-    <Stack.Navigator initialRouteName="RegularHome">
+    <Stack.Navigator initialRouteName="Demo Seguridad">
       <Stack.Screen
-        name="RegularHome"
-        component={HomeScreen}
-        options={{
-          title: 'SkyAnuncios',
-          headerLeft: () => <EntryHeaderButton />,
-        }}
-      />
-      <Stack.Screen
-        name="PreEmbarque"
+        name="Demo Seguridad"
         component={PreEmbarqueScreen}
         options={{
-          title: 'Pre embarque',
+          title: 'Demo Seguridad',
           headerLeft: () => <PreEmbarqueHeaderButton />,
         }}
       />
       <Stack.Screen
-        name="LlamadosEmbarque"
+        name="Demo Seguridad 2"
         component={LlamadosEmbarqueScreen}
         options={{
-          title: 'Llamados embarque',
+          title: 'Demo Seguridad 2',
           headerLeft: () => <LlamadosEmbarqueHeaderButton />,
         }}
       />
       <Stack.Screen
-        name="FinalEmbarque"
+        name="Demo Seguridad 3"
         component={FinalEmbarqueScreen}
         options={{
-          title: 'Final embarque',
+          title: 'Demo Seguridad 3',
           headerLeft: () => <FinalEmbarqueHeaderButton />,
         }}
       />

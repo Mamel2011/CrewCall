@@ -356,7 +356,7 @@ export function RegularNavigation() {
   
   return (
     <Stack.Navigator initialRouteName="RegularHome">
-      <Stack.Screen name="RegularHome" component={RegularHomeScreen} options={{ title: 'SkyAnuncios' }} />
+      <Stack.Screen name="RegularHome" component={RegularHomeScreen} options={{ title: 'CrewCall' }} />
       <Stack.Screen name="PreEmbarque" component={Pantalla1Screen} options={{ title: 'Pre embarque' }} />
       <Stack.Screen name="LlamadosEmbarque" component={Pantalla2Screen} options={{ title: 'Llamados embarque' }} />
       <Stack.Screen name="FinalEmbarque" component={Pantalla3Screen} options={{ title: 'Final embarque' }} />

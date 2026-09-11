@@ -3,80 +3,31 @@ const normalizarDestino = (destino) => {
 };
 
 export const anuncios_es = {
-  1: (horario, vuelo, destino, puerta) => {
-    if(horario >= "06:00" && horario < "12:00") {
-      return `Buenos días, les damos la bienvenida a nuestros pasajeros SKY del vuelo ${vuelo} con destino a ${destino}. Nuestro equipo ya se encuentra disponible en la puerta ${puerta} para apoyarlos y atender cualquier requerimiento antes del inicio del embarque. Les solicitamos amablemente permanecer sentados hasta el comienzo del proceso, el cual está programado para iniciar en aproximadamente 20 minutos. Muchas gracias por su atención y preferencia.`;
-    } else if(horario >= "12:00" && horario < "20:00") {
-      return `Buenas tardes, les damos la bienvenida a nuestros pasajeros SKY del vuelo ${vuelo} con destino a ${destino}. Nuestro equipo ya se encuentra disponible en la puerta ${puerta} para apoyarlos y atender cualquier requerimiento antes del inicio del embarque. Les solicitamos amablemente permanecer sentados hasta el comienzo del proceso, el cual está programado para iniciar en aproximadamente 20 minutos. Muchas gracias por su atención y preferencia.`;
-    } else {
-      return `Buenas noches, les damos la bienvenida a nuestros pasajeros SKY del vuelo ${vuelo} con destino a ${destino}. Nuestro equipo ya se encuentra disponible en la puerta ${puerta} para apoyarlos y atender cualquier requerimiento antes del inicio del embarque. Les solicitamos amablemente permanecer sentados hasta el comienzo del proceso, el cual está programado para iniciar en aproximadamente 20 minutos. Muchas gracias por su atención y preferencia.`;
-    }
-  },
-  2: (vuelo, destino, puerta) => `Su atención por favor, pasajeros del vuelo SKY ${vuelo} con destino a ${destino}. Invitamos a los pasajeros de los grupos 3 y 4 a acercarse a la puerta ${puerta} únicamente para la medición de equipaje. Les recordamos que su tarifa incluye un bolso de mano, como mochila o cartera, el cual debe ubicarse bajo el asiento delantero durante el vuelo. Cualquier equipaje adicional o que exceda las medidas permitidas deberá ser etiquetado y enviado a la bodega del avión, aplicándose el cobro correspondiente en puerta. Agradecemos su comprensión y colaboración para mantener un proceso de embarque ágil y ordenado. Muchas gracias por su atención.`,
-  3: (vuelo, destino, puerta) => `SKY les da la bienvenida al embarque de nuestro vuelo SKY ${vuelo} con destino a la ciudad de ${destino} por la puerta de embarque ${puerta}. En este momento, invitamos exclusivamente a acercarse a aquellos pasajeros que requieran asistencia especial durante el vuelo, así como a quienes viajan con niños de hasta 6 años de edad. Nuestro equipo se encuentra disponible para apoyarlos y acompañarlos durante el proceso de embarque. Muchas gracias por su atención y preferencia.`,
-  4: (vuelo, destino, puerta) => `Continuaremos nuestro embarque de vuelo SKY ${vuelo} con destino a ${destino} por la puerta número ${puerta}, invitamos a embarcar a los pasajeros preferentes del GRUPO NÚMERO 1, sky plus oro y platino, Tarifa max, max flex.`,
-  5: (vuelo, destino, puerta) => `Continuando con el embarque del vuelo SKY ${vuelo} con destino a ${destino} por puerta ${puerta}, invitamos ahora a embarcar pasajeros del GRUPO NÚMERO 2. Si usted no se encuentra en este grupo por favor permanezca en su lugar hasta que este sea anunciado.`,
-  6: (vuelo, destino, puerta) => `Continuando el embarque del vuelo SKY ${vuelo} con destino a ${destino} por la puerta número ${puerta}, invitamos ahora pasajeros del GRUPO NÚMERO 3. Les recordamos que los equipajes de mano incluidos en su tarifa y que no cumpla con las medidas en tamaño o cantidad de piezas incluidos en su tarifa deberán ser pagados como servicio adicional.`,
-  7: (vuelo, destino, puerta) => `Finalizando los procesos de embarque del vuelo SKY ${vuelo} con destino a ${destino} invitamos ahora pasajeros del GRUPO NÚMERO 4 por puerta número ${puerta}.`,
-  8: (vuelo, destino, puerta) => `Llamado final de embarque para pasajeros del vuelo SKY ${vuelo} con destino la ciudad de ${destino}, los invitamos a embarcar en este momento por la puerta número ${puerta}. Avión listo a partir.`,
+  1: (vuelo, destino) => `Su atención por favor. A continuación, entregaremos las instrucciones de seguridad de este avión.`,
+  2: (vuelo, destino) => `Durante el vuelo, les pedimos tener tu cinturón de seguridad abrochado y visible, especialmente cuando la señal se encuentre encendida. Para abrocharlo debes introducir la hebilla metálica dentro del seguro y tirar el extremo de la cinta para ajustarlo. Para desabrocharlo, solo debes levantar la parte superior de la hebilla y separar los extremos.`,
+  3: (vuelo, destino) => `Este Airbus A 3 20 neo cuenta con 8 salidas de emergencia señaladas con pictogramas de evacuación a lo largo de la cabina. Por favor, revisa la salida más cercana a tu asiento, esta podría estar detrás de ti. Hay 2 puertas en la parte delantera, 4 ventanillas sobre las alas y 2 puertas en la parte posterior. Para llegar a ellas puedes seguir las señales luminosas y franjas en el piso. Además, cada salida cuenta con un tobogán. Te recordamos que las salidas de emergencia y primera fila deben estar libres de equipaje de mano.`,
+  4: (vuelo, destino) => `Este Airbus A 3 21 neo cuenta con 10 salidas de emergencia señaladas con pictogramas de evacuación a lo largo de la cabina. Por favor, revisa la salida más cercana a tu asiento, esta podría estar detrás de ti. Hay 2 puertas en la parte delantera, 4 ventanillas sobre las alas, 2 puertas en el sector central y 2 puertas en la parte posterior. Para llegar a ellas puedes seguir las señales luminosas y franjas en el piso. Además, cada salida cuenta con un tobogán. Te recordamos que las salidas de emergencia y primera fila deben estar libres de equipaje de mano.`,
+  5: (vuelo, destino) => `Si la cabina pierde presión, desde el panel sobre su asiento caerán automáticamente 4 máscaras de oxígeno. Para activarlas debes de tirar una de ellas hacia ti, acomodarla sobre tu nariz y boca, ajustar las cintas elásticas y respirar normalmente. Si llevas puesta una mascarilla sanitaria primero deberás retirarla y luego colocarte tu máscara de oxígeno. Es importante que primero asegures tu propia máscara antes de ayudar a otros pasajeros.`,
+  6: (vuelo, destino) => `El chaleco salvavidas se encuentra debajo del asiento. Sólo cuando la tripulación lo indique, debes sacarlo de la bolsa y pasarlo sobre la cabeza. Luego, debes poner la cinta alrededor de la cintura, abrocharla en el seguro de la parte delantera y ajustarlo. Al salir del avión, debes tirar con fuerza las aletas rojas para inflarloautomáticamente. También puedes inflarlo soplando las boquillas. El chaleco salvavidas tiene una luz que se activa cuando entra en contacto con el agua. Recuerda no inflarlo dentro del avión.`,
+  7: (vuelo, destino) => `Para mayor información, revisa la tarjeta de seguridad ubicada frente a ti, en el bolsillo del asiento delantero. Recuerda que no debes sacar estas tarjetas del avión.`,
+  8: (vuelo, destino) => `Queridos pasajeros, estamos a punto de comenzar nuestro viaje y pronto despegaremos. Para un vuelo seguro y cómodo, por favor, asegure su mesa, abróchese el cinturón de seguridad, enderece el respaldo, coloque todo su equipaje de mano debajo del asiento delantero. En nombre de SKY y esta tripulación, esperamos que se relajen y disfruten de este vuelo`,
+  9: (vuelo, destino) => `Queridos pasajeros, Estamos a punto de comenzar nuestro viaje y pronto despegaremos. Para un vuelo seguro y cómodo, por favor, abra las persianas de las ventanillas, asegure su bandeja, abróchese el cinturón de seguridad, enderece el respaldo, coloque todo su equipaje de mano debajo del asiento de adelante y desenchufe todos los cables de los puertos USB. En nombre de SKY y esta tripulación, esperamos que se relajen y disfruten de este vuelo`,
+  10: (vuelo, destino) => `Por motivos de seguridad bajaremos la intensidad de las luces de cabina, en el panel superior encontrarán una luz de lectura.`,
 };
 
 export const anuncios_en = {
-  1: (horario, vuelo, destino, puerta) => {
-    destino = normalizarDestino(destino);
-
-    if(horario >= "06:00" && horario < "12:00") {
-      return `Good morning, we would like to welcome our SKY passengers traveling on flight ${vuelo} to ${destino}. Our team is already available at gate ${puerta} to assist you with anything you may need before boarding begins. We kindly ask passengers to remain seated until the boarding process starts, which is scheduled to begin in approximately 20 minutes. Thank you very much for your attention and preference.`;
-    } else if(horario >= "12:00" && horario < "20:00") {
-      return `Good afternoon, we would like to welcome our SKY passengers traveling on flight ${vuelo} to ${destino}. Our team is already available at gate ${puerta} to assist you with anything you may need before boarding begins. We kindly ask passengers to remain seated until the boarding process starts, which is scheduled to begin in approximately 20 minutes. Thank you very much for your attention and preference.`;
-    } else {
-      return `Good evening, we would like to welcome our SKY passengers traveling on flight ${vuelo} to ${destino}. Our team is already available at gate ${puerta} to assist you with anything you may need before boarding begins. We kindly ask passengers to remain seated until the boarding process starts, which is scheduled to begin in approximately 20 minutes. Thank you very much for your attention and preference.`;
-    }
-  },
-
-  2: (vuelo, destino, puerta) =>
-    `May we have your attention please, passengers traveling on SKY flight ${vuelo} to ${normalizarDestino(destino)}. We invite passengers from groups 3 and 4 to approach gate ${puerta} only for baggage size verification. We kindly remind you that your fare includes one personal item, such as a backpack or handbag, which must be placed under the seat in front of you during the flight. Any additional baggage or baggage exceeding the permitted dimensions must be tagged and checked into the aircraft hold, and the corresponding fee will be charged at the gate. We appreciate your understanding and cooperation in helping us maintain an orderly and efficient boarding process. Thank you very much for your attention.`,
-
-  3: (vuelo, destino, puerta) =>
-    `SKY welcomes you to the boarding of flight SKY ${vuelo} to the city of ${normalizarDestino(destino)} at boarding gate ${puerta}. At this time, we would like to invite only those passengers requiring special assistance during the flight, as well as passengers traveling with children up to 6 years old. Our team is available to assist and support you throughout the boarding process. Thank you very much for your attention and preference.`,
-
-  4: (vuelo, destino, puerta) =>
-    `We will continue boarding SKY flight ${vuelo} to ${normalizarDestino(destino)} through gate number ${puerta}. At this time, we invite our priority passengers from Group 1, sky plus gold and platinum, max fare, max flex.`,
-
-  5: (vuelo, destino, puerta) =>
-    `Continuing with the boarding process for SKY flight ${vuelo} to ${normalizarDestino(destino)} through gate number ${puerta}. we now invite passengers in Group Number 2 to board. If you do not belong to this group, we kindly ask you to remain seated until your group is announced.`,
-
-  6: (vuelo, destino, puerta) =>
-    `Continuing with the boarding process for SKY flight ${vuelo} to ${normalizarDestino(destino)} through gate number ${puerta}. we now invite passengers in Group Number 3 to board. We remind you that the carry-on baggage included in your fare must comply with the permitted size and number of items. Any baggage exceeding these conditions must be paid for as an additional service before boarding.`,
-
-  7: (vuelo, destino, puerta) =>
-    `Finalizing the boarding process for SKY flight ${vuelo} to ${normalizarDestino(destino)} through gate number ${puerta}. we now invite passengers in Group Number 4 to board. Thank you for your attention and cooperation.`,
-
-  8: (vuelo, destino, puerta) =>
-    `Final boarding call for passengers traveling on SKY flight ${vuelo} to the city of ${normalizarDestino(destino)}. We invite our last remaining passengers to board the aircraft at this time through gate ${puerta}. Aircraft ready for departure.`,
+  1: (horario, vuelo) => `Attention please. now, we will share the safety instructions.`,
+  2: (vuelo, destino) => `Keep your seatbelt visibly fastened during the whole flight, especially when the seatbelt sign is illuminated. To fasten your seatbelt, insert the metal tip into the buckle and tighten the strap. To unfasten, simply lift the top of the buckle.`,
+  3: (vuelo, destino) => `This Airbus a 3 20 neo has 8 emergency exits clearly marked with green symbols. Please locate the nearest exit to your seat, which may be behind you. There are 2 doors at the front, 4 exits over the wings, and 2 at the rear. Illuminated signs and floor light strips will guide you to the exits. All of them are equipped with a slide. Remember emergency exits and first row must be clear of all hand luggage.`,
+  4: (vuelo, destino) => `This Airbus a 3 21 neo has 10 emergency exits clearly marked with green symbols. Please locate the exit nearest to your seat. Remember the closest exit may be behind your seat. There are 2 doors at the front, 4 exits over the wings; 2 doors in the middle and 2 doors at the rear of the plane. Illuminated signs and floor light strips will guide you to the exits. All exits are equipped with a slide. Please remember emergency exits and first row must be clear of all hand luggage.`,
+  5: (vuelo, destino) => `If the cabin loses pressure, 4 oxygen masks will automatically drop from panel above your seat. To activate them, pull the mask, place it over your nose and mouth, adjust the elastic straps, and breathe normally. If you are wearing a face mask, you must first remove it and then put on your oxygen mask. It is important that you first secure your own mask before assisting other passengers.`,
+  6: (vuelo, destino) => `Your life vest is located under your seat. If necessary, and only when instructed by the crew, remove it from the bag and place it over your head. Wrap the strap around your waist, secure the buckle into the fitting in front of the vest and adjust it. As you leave the airplane, pull on the red tab to inflate the vest. It can also be inflated by blowing into the tube. The life vest has a light that activates in contact with water. Never inflate it the vest inside the airplane.`,
+  7: (vuelo, destino) => `For additional information, check the safety card located in the seatback pocket in front of you. Remember not to remove the safety card from the aircraft.`,
+  8: (vuelo, destino) => `Dear passengers, We're about to begin our journey and will soon take off. To have a safe and comfortable flight, please secure your tray table, fasten your seatbelt, and straighten your seatback, place all carry-on baggage under the seat in front of you. On behalf of SKY and this crew, we hope you relax and enjoy this flight`,
+  9: (vuelo, destino) => `Dear passengers, We're about to begin our journey and will soon take off. To have a safe and comfortable flight, please open the Windows shades, secure your tray table, fasten your seatbelt, and straighten your seatback, place all carry-on baggage under the seat in front of you and keep all cables unplugged from the USB ports. On behalf of SKY and this crew, we hope you relax and enjoy this flight`,
+  10: (vuelo, destino) => `For safety reasons, we will dim the cabin lights. You will find a reading light in the overhead panel.`,
 };
 /*
-export const anuncios_en = {
-  1: (horario, vuelo, destino, puerta) => {
-    if(destino === "AEROPARQUE") {
-      destino = "Buenos Aires";}
-    if(horario >= "06:00" && horario < "12:00") {
-      return `Good morning, we would like to welcome our SKY passengers traveling on flight ${vuelo} to ${destino}. Our team is already available at gate ${puerta} to assist you with anything you may need before boarding begins. We kindly ask passengers to remain seated until the boarding process starts, which is scheduled to begin in approximately 20 minutes. Thank you very much for your attention and preference.`;
-    } else if(horario >= "12:00" && horario < "20:00") {
-      return `Good afternoon, we would like to welcome our SKY passengers traveling on flight ${vuelo} to ${destino}. Our team is already available at gate ${puerta} to assist you with anything you may need before boarding begins. We kindly ask passengers to remain seated until the boarding process starts, which is scheduled to begin in approximately 20 minutes. Thank you very much for your attention and preference.`;
-    } else {
-      return `Good evening, we would like to welcome our SKY passengers traveling on flight ${vuelo} to ${destino}. Our team is already available at gate ${puerta} to assist you with anything you may need before boarding begins. We kindly ask passengers to remain seated until the boarding process starts, which is scheduled to begin in approximately 20 minutes. Thank you very much for your attention and preference.`;
-    }
-  },
-  2: (vuelo, destino, puerta) =>  `May we have your attention please, passengers traveling on SKY flight ${vuelo} to ${destino}. We invite passengers from groups 3 and 4 to approach gate ${puerta} only for baggage size verification. We kindly remind you that your fare includes one personal item, such as a backpack or handbag, which must be placed under the seat in front of you during the flight. Any additional baggage or baggage exceeding the permitted dimensions must be tagged and checked into the aircraft hold, and the corresponding fee will be charged at the gate. We appreciate your understanding and cooperation in helping us maintain an orderly and efficient boarding process. Thank you very much for your attention.`,
-  3: (vuelo, destino, puerta) => `SKY welcomes you to the boarding of flight SKY ${vuelo} to the city of ${destino} at boarding gate ${puerta}. At this time, we would like to invite only those passengers requiring special assistance during the flight, as well as passengers traveling with children up to 6 years old. Our team is available to assist and support you throughout the boarding process. Thank you very much for your attention and preference.`,
-  4: (vuelo, destino, puerta) => `We will continue boarding SKY flight ${vuelo} to ${destino} through gate number ${puerta}. At this time, we invite our priority passengers from Group 1, sky plus gold and platinum, max fare, max flex.`,
-  5: (vuelo, destino, puerta) => `Continuing with the boarding process for SKY flight ${vuelo} to ${destino} through gate number ${puerta}. we now invite passengers in Group Number 2 to board. If you do not belong to this group, we kindly ask you to remain seated until your group is announced.`,
-  6: (vuelo, destino, puerta) => `Continuing with the boarding process for SKY flight ${vuelo} to ${destino} through gate number ${puerta}. we now invite passengers in Group Number 3 to board. We remind you that the carry-on baggage included in your fare must comply with the permitted size and number of items. Any baggage exceeding these conditions must be paid for as an additional service before boarding.`,
-  7: (vuelo, destino, puerta) => `Finalizing the boarding process for SKY flight ${vuelo} to ${destino} through gate number ${puerta}. we now invite passengers in Group Number 4 to board. Thank you for your attention and cooperation.`,
-  8: (vuelo, destino, puerta) => `Final boarding call for passengers traveling on SKY flight ${vuelo} to the city of ${destino}. We invite our last remaining passengers to board the aircraft at this time through gate ${puerta}. Aircraft ready for departure.`,
-};*/
-
 export const anuncios_pt = {
   1: (horario, vuelo, destino, puerta) => {
     if(horario >= "06:00" && horario < "12:00") {
@@ -94,17 +45,21 @@ export const anuncios_pt = {
   6: (vuelo, destino, puerta) => `Dando continuidade ao embarque do voo SKY ${vuelo} com destino a ${destino} pelo portão número ${puerta}. Convidamos agora os passageiros do Grupo Número 3 para embarcar. Lembramos que a bagagem de mão incluída em sua tarifa deve cumprir as medidas e a quantidade de peças permitidas. Toda bagagem que exceder essas condições deverá ser paga como serviço adicional antes do embarque.`,
   7: (vuelo, destino, puerta) => `Finalizando o processo de embarque do voo SKY ${vuelo} com destino a ${destino} pelo portão número ${puerta}, convidamos agora os passageiros do Grupo Número 4 para embarcar. Muito obrigado pela sua atenção e colaboração.`,
   8: (vuelo, destino, puerta) => `Última chamada de embarque para os passageiros do voo SKY ${vuelo} com destino à cidade de ${destino}. Convidamos os nossos últimos passageiros para embarcar neste momento pelo portão número ${puerta}. Aeronave pronta para partida.`,
-};
+};*/
+
+const anuncios_pt = {};
 
 export const announcementTitles = {
-  1: 'Bienvenida',
-  2: 'Revisión Bag',
-  3: 'Inicio embarque',
-  4: 'Grupo 1',
-  5: 'Grupo 2',
-  6: 'Grupo 3',
-  7: 'Grupo 4',
-  8: 'Llamado final',
+  1: 'Anuncio General',
+  2: 'Cinturón de seguridad',
+  3: 'Salidas A320NEO',
+  4: 'Salidas A321NEO',
+  5: 'Máscaras de Oxígeno',
+  6: 'Chalecos Salvavidas',
+  7: 'Tarjeta de Seguridad',
+  8: 'Cabina Libre SKU',
+  9: 'Cabina Libre SKX',
+  10: 'Cabina Oscura',
 };
 
 export const getFrase = (lang, id, vuelo, destino, puerta, horario) => {

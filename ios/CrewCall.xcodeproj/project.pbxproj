@@ -1,0 +1,218 @@
+// !$*UTF8*$!
+{
+  archiveVersion = 1;
+  classes = {};
+  objectVersion = 55;
+  objects = {
+    /* Project object */
+    0D6054E11E2E1A3B00D9B7A4 /* Project object */ = {
+      isa = PBXProject;
+      attributes = {
+        LastUpgradeCheck = 1430;
+      };
+      buildConfigurationList = 0D6054E21E2E1A3B00D9B7A4 /* Build configuration list for PBXProject */;
+      compatibilityVersion = "Xcode 13.0";
+      developmentRegion = en;
+      hasScannedForEncodings = 0;
+      knownRegions = (
+        en,
+        Base,
+      );
+      mainGroup = 0D6054E31E2E1A3B00D9B7A4;
+      productRefGroup = 0D6054E41E2E1A3B00D9B7A4 /* Products */;
+      projectDirPath = "";
+      projectRoot = "";
+    };
+  };
+  rootObject = 0D6054E11E2E1A3B00D9B7A4 /* Project object */;
+}
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 54;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
+		998D6C6951A06CADD222A29F /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E931CBC51339A4E19F74A7 /* ExpoModulesProvider.swift */; };
+		AFD22C49097C3F44023E1532 /* libPods-SkyAnuncios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543F383AA3EB54001B5E3580 /* libPods-SkyAnuncios.a */; };
+		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
+		C87C2D456F64E698E01B74B3 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 5929E7861E71FEA663F91508 /* PrivacyInfo.xcprivacy */; };
+		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		106060D2D8CCBAB32FAC8131 /* Pods-CrewCall.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CrewCall.release.xcconfig"; path = "Target Support Files/Pods-CrewCall/Pods-CrewCall.release.xcconfig"; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* CrewCall.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CrewCall.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = CrewCall/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = CrewCall/Info.plist; sourceTree = "<group>"; };
+		44E931CBC51339A4E19F74A7 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-CrewCall/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		543F383AA3EB54001B5E3580 /* libPods-CrewCall.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CrewCall.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5929E7861E71FEA663F91508 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = CrewCall/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = CrewCall/SplashScreen.storyboard; sourceTree = "<group>"; };
+		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
+		E48133B5F621E6F7DB4747B4 /* Pods-CrewCall.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CrewCall.debug.xcconfig"; path = "Target Support Files/Pods-CrewCall/Pods-CrewCall.debug.xcconfig"; sourceTree = "<group>"; };
+		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = CrewCall/AppDelegate.swift; sourceTree = "<group>"; };
+		F11748442D0722820044C1D9 /* CrewCall-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CrewCall-Bridging-Header.h"; path = "CrewCall/CrewCall-Bridging-Header.h"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		13B07F8C1A680F5B00A75B9A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AFD22C49097C3F44023E1532 /* libPods-SkyAnuncios.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		13B07FAE1A68108700A75B9A /* SkyAnuncios */ = {
+			isa = PBXGroup;
+			children = (
+				F11748412D0307B40044C1D9 /* AppDelegate.swift */,
+				F11748442D0722820044C1D9 /* CrewCall-Bridging-Header.h */,
+				BB2F792B24A3F905000567C9 /* Supporting */,
+				13B07FB51A68108700A75B9A /* Images.xcassets */,
+				13B07FB61A68108700A75B9A /* Info.plist */,
+				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
+				5929E7861E71FEA663F91508 /* PrivacyInfo.xcprivacy */,
+			);
+			name = CrewCall;
+			sourceTree = "<group>";
+		};
+		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
+				543F383AA3EB54001B5E3580 /* libPods-SkyAnuncios.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
+		83CBB9F61A601CBA00E9B192 = {
+			isa = PBXGroup;
+			children = (
+				13B07FAE1A68108700A75B9A /* SkyAnuncios */,
+				832341AE1AAA6A7D00B99B32 /* Libraries */,
+				83CBBA001A601CBA00E9B192 /* Products */,
+				2D16E6871FA4F8E400B85C8A /* Frameworks */,
+				A2E1F8409928EA30DF2086F8 /* Pods */,
+				8EDAE60A11B1D5495C66CECA /* ExpoModulesProviders */,
+			);
+			indentWidth = 2;
+			sourceTree = "<group>";
+			tabWidth = 2;
+			usesTabs = 0;
+		};
+		83CBBA001A601CBA00E9B192 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				13B07F961A680F5B00A75B9A /* CrewCall.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8EDAE60A11B1D5495C66CECA /* ExpoModulesProviders */ = {
+			isa = PBXGroup;
+			children = (
+				97AB1013D8A9D2C18A2FB967 /* SkyAnuncios */,
+			);
+			name = ExpoModulesProviders;
+			sourceTree = "<group>";
+		};
+		97AB1013D8A9D2C18A2FB967 /* SkyAnuncios */ = {
+			isa = PBXGroup;
+			children = (
+				44E931CBC51339A4E19F74A7 /* ExpoModulesProvider.swift */,
+			);
+			name = SkyAnuncios;
+			sourceTree = "<group>";
+		};
+		A2E1F8409928EA30DF2086F8 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E48133B5F621E6F7DB4747B4 /* Pods-CrewCall.debug.xcconfig */,
+				106060D2D8CCBAB32FAC8131 /* Pods-CrewCall.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		BB2F792B24A3F905000567C9 /* Supporting */ = {
+			isa = PBXGroup;
+			children = (
+				BB2F792C24A3F905000567C9 /* Expo.plist */,
+			);
+			name = Supporting;
+			path = SkyAnuncios/Supporting;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		13B07F861A680F5B00A75B9A /* CrewCall */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "CrewCall" */;
+			buildPhases = (
+				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
+				6108BFD02D0A3BBE15EBCD7A /* [Expo] Configure project */,
+				13B07F871A680F5B00A75B9A /* Sources */,
+				13B07F8C1A680F5B00A75B9A /* Frameworks */,
+				13B07F8E1A680F5B00A75B9A /* Resources */,
+				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
+				52FD53BDAC4246D5BF2B0672 /* [Expo Dev Launcher] Strip Local Network Keys for Release */,
+				E359A365650D3845D2D3F699 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CrewCall;
+			productName = CrewCall;
+			productReference = 13B07F961A680F5B00A75B9A /* CrewCall.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		83CBB9F71A601CBA00E9B192 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1130;
+				TargetAttributes = {
+					13B07F861A680F5B00A75B9A = {
+						LastSwiftMigration = 1250;
+					};
+				};
+				buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "CrewCall" */;
+				compatibilityVersion = "Xcode 3.2";
+				developmentRegion = en;
+				hasScannedForEncodings = 0;
+				knownRegions = (
+					en,
+					Base,
+				);
+				mainGroup = 83CBB9F61A601CBA00E9B192;
+				productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
+				projectDirPath = "";
+				projectRoot = "";
+				targets = (
+					13B07F861A680F5B00A75B9A /* CrewCall */,
+				);
+			};
+		};
+		rootObject = 83CBB9F71A601CBA00E9B192 /* Project object */;
+}

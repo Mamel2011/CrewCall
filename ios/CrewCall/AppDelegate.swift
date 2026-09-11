@@ -20,13 +20,13 @@ class AppDelegate: ExpoAppDelegate {
     reactNativeDelegate = delegate
     reactNativeFactory = factory
 
-#if os(iOS) || os(tvOS)
+ #if os(iOS) || os(tvOS)
     window = UIWindow(frame: UIScreen.main.bounds)
     factory.startReactNative(
       withModuleName: "main",
       in: window,
       launchOptions: launchOptions)
-#endif
+ #endif
 
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
@@ -60,10 +60,10 @@ class ReactNativeDelegate: ExpoReactNativeFactoryDelegate {
   }
 
   override func bundleURL() -> URL? {
-#if DEBUG
+ #if DEBUG
     return RCTBundleURLProvider.sharedSettings().jsBundleURL(forBundleRoot: ".expo/.virtual-metro-entry")
-#else
+ #else
     return Bundle.main.url(forResource: "main", withExtension: "jsbundle")
-#endif
+ #endif
   }
 }

@@ -188,7 +188,7 @@ function AnnouncementScreenBase({ title, ids, route, navigation, nextRoute, butt
     Speech.stop();
     setSpeakingState({ lang, id, paused: false, active: true, text, charIndex: 0 });
     if (supportsPauseResume) {
-      const voiceConfig = { pitch: 1.0, rate: 1.0 };
+      const voiceConfig = { pitch: 1.0, rate: 0.7 };
         /*. ***** IOS ****
     if (lang === 'es') voiceConfig.language = 'es-MX';
     if (lang === 'en') voiceConfig.language = 'en-RU';
@@ -223,28 +223,37 @@ function AnnouncementScreenBase({ title, ids, route, navigation, nextRoute, butt
     <SafeAreaView style={styles.container}>
       <View style={styles.card}>
         <Text style={styles.title}>{title}</Text>
-        <Text style={styles.subTitle}>Vuelo: {flightNumber} - Destino: {destination} - Puerta: {gate}</Text>
-
-        {ids.map((id) => (
+         {ids.map((id) => (
           <View key={id} style={styles.announcementBlock}>
             <Text style={styles.announcementTitle}>Anuncio {id}: {announcementTitles[id]}</Text>
-            <View style={styles.buttonRow}>
-              {['es', 'en', 'pt'].map((lang) => {
-                const active = speakingState.active && speakingState.lang === lang && speakingState.id === id;
-                const label = getLanguageLabel(lang);
-                const displayLabel = active ? `${label} ${speakingState.paused ? '(▶)' : '(||)'}` : label;
-                const langStyle = lang === 'es' ? styles.buttonEs : lang === 'en' ? styles.buttonEn : styles.buttonPt;
-                return (
+            
+              <View style={styles.buttonRow}>
+                {['es', 'en'].map((lang) => {
+                  const active = speakingState.active && speakingState.lang === lang && speakingState.id === id;
+                  const label = getLanguageLabel(lang);
+                  const displayLabel = active ? `${label} ${speakingState.paused ? '(▶)' : '(||)'}` : label;
+                  const langStyle = lang === 'es' ? styles.buttonEs : styles.buttonEn;
+                  return (
+                    <TouchableOpacity
+                      key={lang}
+                      style={[styles.button, langStyle, active ? styles.buttonActive : null]}
+                      onPress={() => handleToggleSpeak(lang, id)}
+                    >
+                      <Text style={styles.buttonText}>{displayLabel}</Text>
+                    </TouchableOpacity>
+                  );
+                })}
+                {/*
+                  Opción PT comentada intencionalmente — mantener para referencia.
                   <TouchableOpacity
-                    key={lang}
-                    style={[styles.button, langStyle, active ? styles.buttonActive : null]}
-                    onPress={() => handleToggleSpeak(lang, id)}
+                    key={'pt'}
+                    style={[styles.button, styles.buttonPt]}
+                    onPress={() => handleToggleSpeak('pt', id)}
                   >
-                    <Text style={styles.buttonText}>{displayLabel}</Text>
+                    <Text style={styles.buttonText}>{getLanguageLabel('pt')}</Text>
                   </TouchableOpacity>
-                );
-              })}
-            </View>
+                */}
+              </View>
             {/*
             <View style={styles.stopRow}>
               <TouchableOpacity style={[styles.button, styles.buttonStop]} onPress={handleStop}>
@@ -278,15 +287,8 @@ function CharterHomeScreen(props) {
 }
 
 function Pantalla1Screen(props) {
-  return <AnnouncementScreenBase {...props} title="Pantalla 1" ids={[1]} nextRoute="Pantalla2" />;
-}
-
-function Pantalla2Screen(props) {
-  return <AnnouncementScreenBase {...props} title="Pantalla 2" ids={[2,3,4,5]} nextRoute="Pantalla3" />;
-}
-
-function Pantalla3Screen(props) {
-  return <AnnouncementScreenBase {...props} title="Pantalla 3" ids={[6]} nextRoute="CharterHome" buttonText="Finalizar" />;
+  // Mostrar botón "Finalizar" que lleva a la pantalla principal 'Entry'
+  return <AnnouncementScreenBase {...props} title="Después de Despegue" ids={[1,2,3,4]} nextRoute="Entry" buttonText="Finalizar" />;
 }
 
 export function CharterScreen(props) {
@@ -318,7 +320,7 @@ function EntryHeaderButton() {
 
 function HomeHeaderButton() {
   const navigation = useNavigation();
-  return <HeaderNavButton label="Home" onPress={() => navigation.navigate('CharterHome')} />;
+  return <HeaderNavButton label="Home" onPress={() => navigation.navigate('Pantalla1')} />;
 }
 
 function Pantalla1HeaderButton() {
@@ -339,37 +341,13 @@ function CharterNavigation() {
   const Stack = createStackNavigator();
 
   return (
-    <Stack.Navigator initialRouteName="CharterHome">
-      <Stack.Screen
-        name="CharterHome"
-        component={CharterHomeScreen}
-        options={{
-          title: 'Ingreso Charter',
-          headerLeft: () => <EntryHeaderButton />,
-        }}
-      />
+    <Stack.Navigator initialRouteName="Pantalla1">
       <Stack.Screen
         name="Pantalla1"
         component={Pantalla1Screen}
         options={{
           title: 'Inicio Embarque',
           headerLeft: () => <HomeHeaderButton />,
-        }}
-      />
-      <Stack.Screen
-        name="Pantalla2"
-        component={Pantalla2Screen}
-        options={{
-          title: 'Embarque Filas',
-          headerLeft: () => <Pantalla1HeaderButton />,
-        }}
-      />
-      <Stack.Screen
-        name="Pantalla3"
-        component={Pantalla3Screen}
-        options={{
-          title: 'Final Embarque',
-          headerLeft: () => <Pantalla2HeaderButton />,
         }}
       />
     </Stack.Navigator>
@@ -381,7 +359,7 @@ export function RegularNavigation() {
   
   return (
     <Stack.Navigator initialRouteName="RegularHome">
-      <Stack.Screen name="RegularHome" component={RegularHomeScreen} options={{ title: 'SkyAnuncios' }} />
+      <Stack.Screen name="RegularHome" component={RegularHomeScreen} options={{ title: 'CrewCall' }} />
       <Stack.Screen name="PreEmbarque" component={Pantalla1Screen} options={{ title: 'Pre embarque' }} />
       <Stack.Screen name="LlamadosEmbarque" component={Pantalla2Screen} options={{ title: 'Llamados embarque' }} />
       <Stack.Screen name="FinalEmbarque" component={Pantalla3Screen} options={{ title: 'Final embarque' }} />

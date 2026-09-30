@@ -1,118 +1,103 @@
 # CrewCall - Documentación Técnica
 
-## Resumen del proyecto
+## Resumen
 
-CrewCall es una aplicación móvil Expo diseñada para generar y reproducir anuncios de embarque en tres idiomas (español, inglés y portugués). El proyecto usa React Native con navegación de pila y control de audio a través de `expo-speech`.
+CrewCall es una aplicación móvil Expo/React Native para seleccionar flujos de anuncios de cabina y reproducirlos mediante síntesis de voz. La interfaz está en español; los anuncios disponibles dependen del módulo y del idioma.
 
-## Tecnología principal
+## Tecnología
 
-- `expo` 55.0.10-canary
-- `react-native` 0.83.4
-- `react` 19.2.0
-- `expo-speech` 55.0.10-canary
-- `@react-navigation/native` 7.2.2
-- `@react-navigation/stack` 7.8.9
-- `@react-native-picker/picker` 2.11.4
-- `expo-status-bar` 55.0.5-canary
-- `react-native-safe-area-context` ~5.6.2
-- `react-native-screens` ~4.23.0
+- Expo `55.0.10-canary-20260328-2049187`
+- React Native `0.83.4`, React `19.2.0`
+- Expo Speech `55.0.10-canary-20260328-2049187`
+- React Navigation Native y Stack 7
+- React Native Picker `2.11.4`
+- Expo Status Bar `55.0.5-canary-20260328-2049187`
+- Safe Area Context `~5.6.2`, Screens `~4.23.0`
 
-## Estructura del proyecto
+## Estructura
 
-El proyecto tiene una única entrada principal en `App.js`.
+- `App.js`: contenedor de navegación y registro de las rutas principales.
+- `src/screens/Entry.js`: menú inicial con accesos a Demo Seguridad y Después del Despegue.
+- `src/screens/Regular.js`: flujo de demostración de seguridad y controles de reproducción.
+- `src/screens/Charter.js`: módulo Después del Despegue.
+- `src/screens/Arribo.js`: captura de datos y anuncios de llegada/equipaje.
+- `src/screens/Placeholder.js`: pantalla vacía de Contingencia.
+- `src/constants/announcements.js`: textos de seguridad.
+- `src/constants/annCharters.js`: textos posteriores al despegue.
+- `src/constants/annArribo.js`: textos de arribo.
+- `src/utils/speech.js`: división y reproducción de textos largos.
+- `src/utils/styles.js`: estilos compartidos.
+- `assets/icon.png`: icono principal de la aplicación; contiene el megáfono.
 
-### Componentes clave
+## Navegación y módulos
 
-- `HomeScreen`: pantalla principal donde el usuario ingresa número de vuelo, destino y puerta.
-- `AnnouncementScreenBase`: componente reutilizable que muestra botones de idioma para cada anuncio, el estado del vuelo y reproduce audio.
-- `PreEmbarqueScreen`, `LlamadosEmbarqueScreen`, `FinalEmbarqueScreen`: pantallas de flujo que usan `AnnouncementScreenBase` con distintos conjuntos de anuncios.
+La ruta inicial es `Entry`. Desde el menú se puede abrir `DemoSeguridad` o `Charters`. `App.js` también registra `Arribo` y `Contingencia`, pero Arribo no tiene un botón en el menú inicial y Contingencia solo muestra una pantalla vacía.
 
-## Flujo de navegación
+### Demo Seguridad
 
-1. `HomeScreen` captura:
-   - `flightNumber`
-   - `destination`
-   - `gate`
-   - `horario` calculado con la hora local actual en formato `HH:mm`
-2. Cuando el usuario presiona `Siguiente`, se navega a `PreEmbarque` con parámetros.
-3. `PreEmbarque` muestra anuncios 1 y 2.
-4. `LlamadosEmbarque` muestra anuncios 3, 4, 5 y 6.
-5. `FinalEmbarque` muestra anuncios 7 y 8.
+El formulario de seguridad recoge número de vuelo, destino, puerta y la hora local (`HH:mm`). Valida que vuelo, destino y puerta estén informados antes de navegar. Los valores se pasan por parámetros de navegación.
 
-## Lógica de anuncios
+El flujo de anuncios se divide en tres pantallas:
 
-Las frases se definen en tres objetos:
+- Demo Seguridad: anuncios 1 y 2, con modo de reproducción de demostración.
+- Demo Seguridad 2: anuncios 3 a 6.
+- Demo Seguridad 3: anuncios 7 a 10.
 
-- `anuncios_es`
-- `anuncios_en`
-- `anuncios_pt`
+El primer grupo incluye secuencias automáticas para dos variantes de demostración, Cabina Libre y Cabina Oscura. La pantalla permite reproducir por idioma, detener el audio y avanzar entre grupos.
 
-Cada objeto contiene anuncios numerados del 1 al 8.
+### Después del Despegue
 
-### Anuncio 1
+El módulo utiliza cuatro anuncios (1-4) sobre uso de dispositivos, cinturones, cruce de la Cordillera y declaración SAG. `Charter.js` contiene un formulario de datos de vuelo, pero el navegador interno actualmente inicia directamente en la pantalla de anuncios; revisar esta navegación si se espera capturar datos antes de reproducir.
 
-- El anuncio 1 de cada idioma requiere el valor `horario` además de `vuelo`, `destino` y `puerta`.
-- La lógica selecciona:
-  - `Buenos días` / `Good morning` / `Bom dia` para horas de `06:00` a `11:59`
-  - `Buenas tardes` / `Good afternoon` / `Boa tarde` para horas de `12:00` a `19:59`
-  - `Buenas noches` / `Good evening` / `Boa noite` para el resto.
+### Arribo
 
-### Anuncios 2-8
+El formulario recoge número de vuelo, procedencia, aeropuerto de arribo, número de cinta y hora local. Incluye dos anuncios: aviso de llegada y retiro de equipaje. La pantalla de anuncios muestra controles de idioma y navegación para finalizar o volver al formulario.
 
-- Requieren únicamente `vuelo`, `destino` y `puerta`.
-- Incluyen mensajes de verificación de equipaje, priorización de grupos y llamado final.
+## Textos y soporte de idiomas
 
-## Funciones de ayuda
+Cada módulo exporta `getFrase(lang, id, ...)` y `announcementTitles` desde su archivo de constantes. `getFrase` devuelve una cadena vacía si el idioma o el identificador no tienen texto.
 
-### `getFrase(lang, id, vuelo, destino, puerta, horario)`
+- Seguridad: anuncios 1-10 en español e inglés. La tabla portuguesa está vacía.
+- Después del Despegue: anuncios 1-4 en español e inglés. La tabla portuguesa está vacía.
+- Arribo: dos anuncios en español, inglés y portugués.
 
-- Selecciona el objeto de idioma correspondiente.
-- Si el anuncio tiene 4 parámetros, pasa `horario` primero.
-- Si el anuncio tiene 3 parámetros, omite `horario`.
+Los anuncios de arribo usan la hora para elegir el saludo de mañana, tarde o noche. El umbral es `06:00` a `11:59`, `12:00` a `19:59` y el resto del día para la noche.
 
-### `speak(lang, id, vuelo, destino, puerta, horario)`
+## Síntesis de voz
 
-- Construye el texto usando `getFrase`
-- Configura `voiceConfig` según el idioma:
-  - `es`: `es-MX`
-  - `en`: `en-RU`
-  - `pt`: `pt-BR`
-- Reproduce el texto con `Speech.speak` y detiene cualquier reproducción previa con `Speech.stop()`.
+`src/utils/speech.js` exporta `splitSpeechText` y `speakTextInChunks`. El texto se normaliza a una sola línea; si excede `MAX_SPEECH_CHARS` (4000), se divide preferentemente en espacios y se reproduce secuencialmente. Los callbacks de límite de palabra ajustan el índice de caracteres al texto completo.
 
-## UI y estilos
+Las pantallas detienen la reproducción anterior antes de iniciar otro anuncio. Las voces configuradas para Android son `es-LA`, `en-US` y `pt-BR`. La pausa y reanudación nativas se usan cuando están disponibles; en Android, la reanudación continúa desde el índice de caracteres guardado.
 
-- El estilo base usa un contenedor central con tarjeta blanca y fondo morado.
-- El `HomeScreen` ahora incluye un footer fija en la parte inferior derecha de la pantalla.
-- El footer usa:
-  - `position: absolute`
-  - `right: 0`
-  - `bottom: 0`
-  - fondo semitransparente `rgba(103, 30, 117, 0.85)`
-  - texto blanco de `fontSize: 14`
+## Identidad visual y configuración Expo
 
-## Dependencias y configuración
+`app.json` configura `assets/icon.png` como icono general, imagen de inicio, favicon web e imagen foreground del icono adaptable de Android. El fondo adaptable Android es `#671e75`. El icono `icon.png` es cuadrado, de 1024 x 1024 píxeles, y contiene el megáfono sobre un círculo claro.
 
-- `package.json` define scripts:
-  - `npm start` → `expo start`
-  - `npm run android` → `expo run:android`
-  - `npm run ios` → `expo run:ios`
-  - `npm run web` → `expo start --web`
+Los recursos Android nativos se generan con `npx expo prebuild --platform android --no-install`; las variantes del launcher se guardan como WebP bajo `android/app/src/main/res/mipmap-*` y la pantalla de inicio bajo `drawable-*`.
 
-## Consideraciones de desarrollo
+El catálogo de iconos iOS está en `ios/CrewCall/Images.xcassets`. En el estado actual, Expo no logra terminar el prebuild iOS porque el parser encuentra sintaxis inválida en `ios/CrewCall.xcodeproj/project.pbxproj`; reparar ese proyecto antes de regenerar o compilar iOS.
 
-- La aplicación actualmente no usa un archivo de configuración separada; toda la lógica está contenida en `App.js`.
-- `horario` se calcula una sola vez en el `HomeScreen` y se transmite a las pantallas de anuncio.
-- La navegación se implementa con `createStackNavigator`.
+## Comandos y builds
 
-## Posibles mejoras futuras
+Scripts de `package.json`:
 
-- Separar lógica de anuncios y datos en archivos independientes.
-- Agregar validación de destino y puerta más estricta.
-- Manejar configuraciones de voz y ajustes de accesibilidad.
-- Agregar pruebas unitarias para `getFrase` y el flujo de navegación.
-- Extender los anuncios para incluir otros idiomas o variaciones dinámicas.
+- `npm start`: iniciar Expo.
+- `npm run android`: prebuild/compilar Android localmente.
+- `npm run ios`: ejecutar iOS localmente.
+- `npm run web`: iniciar Expo para web.
 
-## Notas de despliegue
+Perfiles EAS definidos en `eas.json`:
 
-- El proyecto ya se ha usado con `eas build -p android --profile preview`.
-- Para cargas a producción se recomienda revisar versiones estables de Expo en lugar de canary.
+- `development`: cliente de desarrollo, distribución interna.
+- `preview`: APK Android y simulador iOS; distribución interna.
+- `production`: perfil de producción sin opciones adicionales.
+
+Build Android de preview: `eas build -p android --profile preview`. Los cambios en iconos nativos requieren un build nuevo; una actualización OTA no modifica el icono de la app instalada.
+
+## Estado conocido
+
+- Los anuncios de seguridad y charter todavía no tienen textos en portugués, aunque la interfaz ofrece el control PT.
+- Arribo está registrado en navegación, pero no aparece como opción en el menú inicial.
+- Contingencia aún no está implementado.
+- No hay archivos de pruebas detectados en el repositorio.
+- La compilación local Android necesita un SDK configurado. La sincronización iOS está bloqueada por la sintaxis del proyecto Xcode indicada arriba.

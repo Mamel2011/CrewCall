@@ -1,62 +1,68 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { SafeAreaView, View, Text, TextInput, TouchableOpacity, Alert, Platform } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import * as Speech from 'expo-speech';
 import { Picker } from '@react-native-picker/picker';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { styles } from '../utils/styles';
+import { speakTextInChunks } from '../utils/speech';
 import { getFrase, announcementTitles } from '../constants/announcements';
 
-const destinations = [
-  { label: "Seleccionar destino", value: "" },
-  { label: "ARICA", value: "ARICA" },
-  { label: "ANTOFAGASTA", value: "ANTOFAGASTA" },
-  { label: "CALAMA", value: "CALAMA" },
-  { label: "IQUIQUE", value: "ikique" },
-  { label: "COPIAPÓ", value: "COPIAPÓ" },
-  { label: "LA SERENA", value: "LA SERENA" },
-  { label: "SANTIAGO", value: "SANTIAGO" },
-  { label: "SANTIAGO VIA PUERTO MONTT", value: "SANTIAGO VIA PUERTO MONT" },
-  { label: "SANTIAGO VIA LA SERENA", value: "SANTIAGO VIA LA SERENA" },
-  { label: "CONCEPCIÓN", value: "CONCEPCIÓN" },
-  { label: "TEMUCO", value: "TEMUCO" },
-  { label: "VALDIVIA", value: "VALDIVIA" },
-  { label: "OSORNO", value: "OSORNO" },
-  { label: "PUERTO MONTT", value: "PUERTO MONT" },
-  { label: "CASTRO", value: "CASTRO" },
-  { label: "BALMACEDA", value: "BALMACEDA" },
-  { label: "PUERTO NATALES", value: "PUERTO NATALES" },
-  { label: "PUNTA ARENAS", value: "PUNTA ARENAS" },
-  { label: "AEROPARQUE", value: "AEROPARQUE" },
-  { label: "EZEIZA", value: "EZEIZA" },
-  { label: "BARILOCHE", value: "bariloche" },
-  { label: "MENDOZA", value: "MENDOZA" },
-  { label: "EL CALAFATE", value: "EL CALAFATE" },
-  { label: "SALVADOR DE BAHIA", value: "SALVADOR DE BAHIA" },
-  { label: "LIMA", value: "LIMA" },
-  { label: "RIO DE JANEIRO", value: "RIO DE JANEIRO" },
-  { label: "MONTEVIDEO", value: "MONTEVIDEO" },
-  { label: "SAO PAULO", value: "SAO PAULO" },
-  { label: "BELLO HORIZONTE", value: "BELO HORIZONTE" },
-  { label: "PORTO ALEGRE", value: "PORTO ALEGRE" },
-  { label: "FLORIANOPOLIS", value: "florianopolis" },
-  { label: "LIMA VIA AEROPARQUE", value: "LIMA VIA AEROPARQUE" },
-  { label: "LIMA VIA MONTEVIDEO", value: "LIMA VIA MONTEVIDEO" },
-  { label: "LIMA VIA EZEIZA", value: "LIMA VIA EZEIZA" },
-  { label: "SALVADOR DE BAHIA VIA EZEIZA", value: "SALVADOR DE BAHIA VIA EZEIZA" },
-  { label: "SALVADOR DE BAHIA VIA MONTEVIDEO", value: "SALVADOR DE BAHIA VIA MONTEVIDEO" },
-  { label: "RIO DE JANEIRO VIA MONTEVIDEO", value: "RIO DE JANEIRO VIA MONTEVIDEO" },
-  { label: "BALMACEDA VIA PUERTO MONTT", value: "BALMACEDA VIA PUERTO MONT" },
-  { label: "PUERTO NATALES VIA PUERTO MONTT", value: "PUERTO NATALES VIA PUERTO MONT" },
-  { label: "PUNTA ARENAS VIA PUERTO MONTT", value: "PUNTA ARENAS VIA PUERTO MONT" },
-  { label: "CALAMA VIA LA SERENA", value: "CALAMA VIA LA SERENA" },
-  { label: "IQUIQUE VIA LA SERENA", value: "IQUIQUE VIA LA SERENA" },
-  { label: "ANTOFAGASTA VIA LA SERENA", value: "ANTOFAGASTA VIA LA SERENA" },
+const DEMO_SEGURIDAD_SEQUENCE = [
+  { lang: 'es', id: 1 },
+  { lang: 'en', id: 1 },
+  { lang: 'es', id: 2 },
+  { lang: 'en', id: 2 },
+  { lang: 'es', id: 3 },
+  { lang: 'en', id: 3 },
+  { lang: 'es', id: 5 },
+  { lang: 'en', id: 5 },
+  { lang: 'es', id: 6 },
+  { lang: 'es', id: 7 },
+  { lang: 'en', id: 7 },
 ];
 
-function AnnouncementScreenBase({ title, ids, route, navigation, nextRoute, buttonText = "Siguiente" }) {
+const DEMO_SEGURIDAD_SEQUENCE_2 = [
+  { lang: 'es', id: 1 },
+  { lang: 'en', id: 1 },
+  { lang: 'es', id: 2 },
+  { lang: 'en', id: 2 },
+  { lang: 'es', id: 4 },
+  { lang: 'en', id: 4 },
+  { lang: 'es', id: 5 },
+  { lang: 'en', id: 5 },
+  { lang: 'es', id: 6 },
+  { lang: 'es', id: 7 },
+  { lang: 'en', id: 7 },
+];
+
+const CABINA_LIBRE_SEQUENCE = [
+  { lang: 'es', id: 8 },
+  { lang: 'en', id: 8 },
+];
+
+const CABINA_OSCURA_SEQUENCE = [
+  { lang: 'es', id: 10 },
+  { lang: 'en', id: 10 },
+];
+
+const getDemoSequence = (sequenceKey) => {
+  if (sequenceKey === 'demo2') return DEMO_SEGURIDAD_SEQUENCE_2;
+  if (sequenceKey === 'cabinaLibre') return CABINA_LIBRE_SEQUENCE;
+  if (sequenceKey === 'cabinaOscura') return CABINA_OSCURA_SEQUENCE;
+  return DEMO_SEGURIDAD_SEQUENCE;
+};
+
+function AnnouncementScreenBase({ title, ids, route, navigation, nextRoute, buttonText = "Siguiente", singleDemoMode = false }) {
   const { flightNumber = '', destination = '', gate = '', horario = '' } = route?.params || {};
   const [speakingState, setSpeakingState] = useState({ lang: null, id: null, paused: false, active: false, text: '', charIndex: 0 });
+  const [demoSequenceState, setDemoSequenceState] = useState({ active: false, paused: false, index: 0, charIndex: 0, sequenceKey: null });
+  const demoSequenceTimeoutRef = useRef(null);
+  const demoSequenceRef = useRef(demoSequenceState);
+
+  React.useEffect(() => {
+    demoSequenceRef.current = demoSequenceState;
+  }, [demoSequenceState]);
 
   const getLanguageLabel = (lang) => {
     if (lang === 'es') return 'ES';
@@ -77,8 +83,9 @@ function AnnouncementScreenBase({ title, ids, route, navigation, nextRoute, butt
     if (lang === 'en') voiceConfig.language = 'en-US';
     if (lang === 'pt') voiceConfig.language = 'pt-BR';
     const segment = text.slice(startIndex);
-    Speech.speak(segment, {
-      ...voiceConfig,
+    speakTextInChunks({
+      text: segment,
+      voiceConfig,
       onBoundary: ({ charIndex }) => {
         setSpeakingState((prevState) => {
           if (prevState.lang !== lang || prevState.id !== id) return prevState;
@@ -129,8 +136,9 @@ function AnnouncementScreenBase({ title, ids, route, navigation, nextRoute, butt
     if (lang === 'en') voiceConfig.language = 'en-US';
     if (lang === 'pt') voiceConfig.language = 'pt-BR';
     
-      Speech.speak(text, {
-        ...voiceConfig,
+      speakTextInChunks({
+        text,
+        voiceConfig,
         onBoundary: ({ charIndex }) => {
           setSpeakingState((prevState) => {
             if (prevState.lang !== lang || prevState.id !== id) return prevState;
@@ -149,6 +157,167 @@ function AnnouncementScreenBase({ title, ids, route, navigation, nextRoute, butt
     Speech.stop();
     setSpeakingState({ lang: null, id: null, paused: false, active: false, text: '', charIndex: 0 });
   };
+
+  const stopDemoSequence = (sequenceKey = demoSequenceState.sequenceKey) => {
+    if (demoSequenceTimeoutRef.current) {
+      clearTimeout(demoSequenceTimeoutRef.current);
+      demoSequenceTimeoutRef.current = null;
+    }
+    Speech.stop();
+    const nextState = { active: false, paused: false, index: 0, charIndex: 0, sequenceKey: null };
+    demoSequenceRef.current = nextState;
+    setDemoSequenceState(nextState);
+    setSpeakingState({ lang: null, id: null, paused: false, active: false, text: '', charIndex: 0 });
+  };
+
+  const playDemoSequence = (sequenceKey = 'demo1', startIndex = 0, resumeFromChar = 0) => {
+    if (demoSequenceTimeoutRef.current) {
+      clearTimeout(demoSequenceTimeoutRef.current);
+      demoSequenceTimeoutRef.current = null;
+    }
+
+    const sequence = getDemoSequence(sequenceKey);
+    let index = startIndex;
+    let resumeChar = resumeFromChar;
+
+    const playNext = () => {
+      if (index >= sequence.length) {
+        stopDemoSequence(sequenceKey);
+        return;
+      }
+
+      const item = sequence[index];
+      const { lang, id } = item;
+      const text = getFrase(lang, id, flightNumber, destination, gate, horario);
+
+      if (!text) {
+        index += 1;
+        resumeChar = 0;
+        playNext();
+        return;
+      }
+
+      const textToSpeak = resumeChar > 0 ? text.slice(resumeChar) : text;
+      const voiceConfig = { pitch: 1.0, rate: 1.0 };
+      if (lang === 'es') voiceConfig.language = 'es-LA';
+      if (lang === 'en') voiceConfig.language = 'en-US';
+
+      setDemoSequenceState({ active: true, paused: false, index, charIndex: resumeChar, sequenceKey });
+      setSpeakingState({ lang, id, paused: false, active: true, text, charIndex: resumeChar });
+
+      speakTextInChunks({
+        text: textToSpeak,
+        voiceConfig,
+        onBoundary: ({ charIndex }) => {
+          const absoluteCharIndex = resumeChar + charIndex;
+          setDemoSequenceState((prevState) => ({ ...prevState, charIndex: absoluteCharIndex }));
+          setSpeakingState((prevState) => {
+            if (prevState.lang !== lang || prevState.id !== id) return prevState;
+            return { ...prevState, charIndex: absoluteCharIndex };
+          });
+        },
+        onDone: () => {
+          const currentState = demoSequenceRef.current;
+          if (!currentState.active || currentState.sequenceKey !== sequenceKey) return;
+          demoSequenceTimeoutRef.current = setTimeout(() => {
+            index += 1;
+            resumeChar = 0;
+            playNext();
+          }, 2000);
+        },
+        onError: () => {
+          const currentState = demoSequenceRef.current;
+          if (!currentState.active || currentState.sequenceKey !== sequenceKey) return;
+          demoSequenceTimeoutRef.current = setTimeout(() => {
+            index += 1;
+            resumeChar = 0;
+            playNext();
+          }, 2000);
+        },
+      });
+    };
+
+    playNext();
+  };
+
+  const toggleDemoPlayback = async (sequenceKey = 'demo1') => {
+    if (!demoSequenceState.active || demoSequenceState.sequenceKey !== sequenceKey) {
+      playDemoSequence(sequenceKey, 0, 0);
+      return;
+    }
+
+    if (demoSequenceState.paused) {
+      if (supportsPauseResume) {
+        await Speech.resume();
+      } else {
+        playDemoSequence(sequenceKey, demoSequenceState.index, demoSequenceState.charIndex || 0);
+        return;
+      }
+      setDemoSequenceState((prevState) => ({ ...prevState, paused: false }));
+      setSpeakingState((prevState) => ({ ...prevState, paused: false }));
+      return;
+    }
+
+    if (supportsPauseResume) {
+      await Speech.pause();
+      setDemoSequenceState((prevState) => ({ ...prevState, paused: true, charIndex: speakingState.charIndex || prevState.charIndex }));
+      setSpeakingState((prevState) => ({ ...prevState, paused: true, charIndex: prevState.charIndex }));
+      return;
+    }
+
+    Speech.stop();
+    setDemoSequenceState((prevState) => ({ ...prevState, paused: true, charIndex: speakingState.charIndex || prevState.charIndex }));
+    setSpeakingState((prevState) => ({ ...prevState, paused: true, charIndex: prevState.charIndex }));
+  };
+
+  if (singleDemoMode) {
+    const demoLabel = (sequenceKey) => {
+      const active = demoSequenceState.active && demoSequenceState.sequenceKey === sequenceKey;
+      const labelMap = {
+        demo1: 'Demo A320',
+        demo2: 'Demo A321',
+        cabinaLibre: 'Cabina Libre',
+        cabinaOscura: 'Cabina Oscura',
+      };
+      const label = labelMap[sequenceKey] || 'Demo';
+      return active ? `${label} ${demoSequenceState.paused ? '(▶)' : '(||)'}` : label;
+    };
+
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.card}>
+          <Text style={styles.title}>{title}</Text>
+          <View style={{ gap: 12 }}>
+            <TouchableOpacity
+              style={[styles.nextButton, styles.nextButtonSecondary, demoSequenceState.active && demoSequenceState.sequenceKey === 'demo1' ? styles.buttonActive : null]}
+              onPress={() => toggleDemoPlayback('demo1')}
+            >
+              <Text style={styles.nextButtonText}>{demoLabel('demo1')}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.nextButton, styles.nextButtonSecondary, demoSequenceState.active && demoSequenceState.sequenceKey === 'demo2' ? styles.buttonActive : null]}
+              onPress={() => toggleDemoPlayback('demo2')}
+            >
+              <Text style={styles.nextButtonText}>{demoLabel('demo2')}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.nextButton, styles.nextButtonSecondary, demoSequenceState.active && demoSequenceState.sequenceKey === 'cabinaLibre' ? styles.buttonActive : null]}
+              onPress={() => toggleDemoPlayback('cabinaLibre')}
+            >
+              <Text style={styles.nextButtonText}>{demoLabel('cabinaLibre')}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.nextButton, styles.nextButtonSecondary, demoSequenceState.active && demoSequenceState.sequenceKey === 'cabinaOscura' ? styles.buttonActive : null]}
+              onPress={() => toggleDemoPlayback('cabinaOscura')}
+            >
+              <Text style={styles.nextButtonText}>{demoLabel('cabinaOscura')}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <StatusBar style="auto" />
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -201,6 +370,16 @@ function AnnouncementScreenBase({ title, ids, route, navigation, nextRoute, butt
             <Text style={styles.nextButtonText}>{buttonText}</Text>
           </TouchableOpacity>
         ) : null}
+        <TouchableOpacity
+          style={[styles.nextButton, styles.nextButtonSecondary]}
+          onPress={() => {
+            Speech.stop();
+            stopDemoSequence();
+            navigation.navigate('Entry');
+          }}
+        >
+          <Text style={styles.nextButtonText}>Finalizar</Text>
+        </TouchableOpacity>
       </View>
       <StatusBar style="auto" />
     </SafeAreaView>
@@ -208,7 +387,7 @@ function AnnouncementScreenBase({ title, ids, route, navigation, nextRoute, butt
 }
 
 function PreEmbarqueScreen(props) {
-  return <AnnouncementScreenBase {...props} title="Demo Seguridad" ids={[1,2]} nextRoute="Demo Seguridad 2" />;
+  return <AnnouncementScreenBase {...props} title="Demo Seguridad" ids={[1,2]} nextRoute={null} singleDemoMode />;
 }
 
 function LlamadosEmbarqueScreen(props) {

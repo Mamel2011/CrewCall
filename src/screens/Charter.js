@@ -6,6 +6,7 @@ import { Picker } from '@react-native-picker/picker';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { styles } from '../utils/styles';
+import { speakTextInChunks } from '../utils/speech';
 import { getFrase, announcementTitles } from '../constants/annCharters';
 
 const destinations = [
@@ -146,8 +147,9 @@ function AnnouncementScreenBase({ title, ids, route, navigation, nextRoute, butt
     
 
     const segment = text.slice(startIndex);
-    Speech.speak(segment, {
-      ...voiceConfig,
+    speakTextInChunks({
+      text: segment,
+      voiceConfig,
       onBoundary: ({ charIndex }) => {
         setSpeakingState((prevState) => {
           if (prevState.lang !== lang || prevState.id !== id) return prevState;
@@ -198,8 +200,9 @@ function AnnouncementScreenBase({ title, ids, route, navigation, nextRoute, butt
     if (lang === 'en') voiceConfig.language = 'en-US';
     if (lang === 'pt') voiceConfig.language = 'pt-BR';
 
-      Speech.speak(text, {
-        ...voiceConfig,
+      speakTextInChunks({
+        text,
+        voiceConfig,
         onBoundary: ({ charIndex }) => {
           setSpeakingState((prevState) => {
             if (prevState.lang !== lang || prevState.id !== id) return prevState;

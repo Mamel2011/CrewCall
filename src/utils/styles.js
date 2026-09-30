@@ -158,4 +158,14 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     alignItems: 'flex-end',
   },
+  logoContainer: {
+    width: '100%',
+    alignItems: 'center',
+    marginBottom: 12,
+    marginTop: -20,
+  },
+  logoImage: {
+    width: 300,
+    height: 120,
+  },
 });
